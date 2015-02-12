@@ -1,9 +1,9 @@
 <?php
 /*
-* Plugin Name: Plugin Name
-* Plugin URI: https://github.com/johnie/plugin-boilerplate
+* Plugin Name: Hellobar
+* Plugin URI: https://github.com/johnie/hellobar
 * Description:
-* Version: 0.0.1
+* Version: 1.0.0
 * Author: Johnie Hjelm
 * Author URI: http://johnie.se
 * License: MIT
@@ -37,27 +37,27 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
-if ( ! class_exists( 'PluginName' ) ) {
+if ( ! class_exists( 'HelloBar' ) ) {
 
-  class PluginName {
+  class HelloBar {
 
     /**
     * Tag identifier used by file includes and selector attributes.
     * @var string
     */
-    protected $tag = 'pluginname';
+    protected $tag = 'hellobar';
 
     /**
     * User friendly name used to identify the plugin.
     * @var string
     */
-    protected $name = 'Plugin Name';
+    protected $name = 'Hellobar';
 
     /**
     * Current version of the plugin.
     * @var string
     */
-    protected $version = '0.0.1';
+    protected $version = '1.0.0';
 
     /**
     * Initiate the plugin by setting the default values and assigning any
@@ -73,6 +73,6 @@ if ( ! class_exists( 'PluginName' ) ) {
 
   }
 
-  new PluginName();
+  new HelloBar();
 
 }

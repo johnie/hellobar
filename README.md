@@ -1,16 +1,16 @@
-# plugin-boilerplate
+# Hellobar
 
-> Text about the plugin
+> Simple WordPress plugin to display hellobars a.k.a "Notifcations"
 
 ## Install
 
 ```sh
-$ composer require johnie/plugin-boilerplate
+$ composer require johnie/hellobar
 ```
 
-## Usage
+## Stuff I should do
 
-Text about how to use the plugin
+* Write `Get started` and `Documentation`
 
 ## License
 
