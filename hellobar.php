@@ -2,7 +2,7 @@
 /*
 * Plugin Name: Hellobar
 * Plugin URI: https://github.com/johnie/hellobar
-* Description:
+* Description: Simple WordPress plugin to display hellobars a.k.a "Notifcations"
 * Version: 1.0.0
 * Author: Johnie Hjelm
 * Author URI: http://johnie.se
@@ -33,9 +33,7 @@ THE SOFTWARE.
 */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
-  exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'HelloBar' ) ) {
 
@@ -67,9 +65,26 @@ if ( ! class_exists( 'HelloBar' ) ) {
     */
     function __construct() {
 
-
+      if ( is_admin() ):
+        // Add options page
+        add_action( 'admin_menu', array( $this, '_hello_menu_page') );
+      endif;
 
     }
+
+    /**
+     * Plugin menu page
+     */
+     function _hello_menu_page() {
+       add_menu_page( __( 'Hellobar Settings', $this->tag ), __( 'Hellobar Settings', $this->tag ), 'manage_options', 'hellobar-plugin-options', array( $this, '_hello_render_plugin_options' ), 'dashicons-megaphone' );
+     }
+
+     /**
+      * Render the plugin options view.
+      */
+     function _hello_render_plugin_options() {
+       include_once dirname( __FILE__ ) . '/views/plugin-options.php';
+     }
 
   }
 
