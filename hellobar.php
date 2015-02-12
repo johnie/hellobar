@@ -39,37 +39,49 @@ if ( ! class_exists( 'HelloBar' ) ) {
 
   class HelloBar {
 
+    private static $instance;
+
     /**
     * Tag identifier used by file includes and selector attributes.
     * @var string
     */
-    protected $tag = 'hellobar';
+    public $tag = '';
 
     /**
     * User friendly name used to identify the plugin.
     * @var string
     */
-    protected $name = 'Hellobar';
+    public $name = '';
 
     /**
     * Current version of the plugin.
     * @var string
     */
-    protected $version = '1.0.0';
+    public $version = '';
 
-    /**
-    * Initiate the plugin by setting the default values and assigning any
-    * required actions and filters.
-    *
-    * @access public
-    */
-    function __construct() {
+    public static function instance() {
+      if ( ! isset( self::$instance ) ) {
+			   self::$instance = new static;
+			   self::$instance->setup_globals();
+			   self::$instance->setup_actions();
+		  }
+
+      return self::$instance;
+    }
+
+    private function setup_actions() {
 
       if ( is_admin() ):
         // Add options page
-        add_action( 'admin_menu', array( $this, '_hello_menu_page') );
+        add_action( 'admin_menu', array( $this, '_hello_menu_page' ) );
       endif;
 
+    }
+
+    private function setup_globals() {
+      $this->tag = 'hellobar';
+      $this->name = 'Hellobar';
+      $this->version = '1.0.0';
     }
 
     /**
@@ -88,6 +100,12 @@ if ( ! class_exists( 'HelloBar' ) ) {
 
   }
 
-  new HelloBar();
-
 }
+
+if ( !function_exists('hellobar')) {
+  function hellobar() {
+    return HelloBar::instance();
+  }
+}
+
+add_action('plugins_loaded', 'hellobar');
