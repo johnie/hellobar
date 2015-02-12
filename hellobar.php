@@ -109,7 +109,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
       * Plugin menu page
       */
      function _hello_menu_page() {
-       add_menu_page( __( 'Hellobar Settings', $this->tag ), __( 'Hellobar Settings', $this->tag ), 'manage_options', 'hellobar-plugin-options', array( $this, '_hello_render_plugin_options' ), 'dashicons-megaphone' );
+       add_menu_page( __( $this->name . ' Settings', $this->tag ), __( $this->name . ' Settings', $this->tag ), 'manage_options', 'hellobar-plugin-options', array( $this, '_hello_render_plugin_options' ), 'dashicons-megaphone' );
      }
 
      /**
