@@ -42,23 +42,31 @@ if ( ! class_exists( 'HelloBar' ) ) {
     private static $instance;
 
     /**
-    * Tag identifier used by file includes and selector attributes.
-    * @var string
-    */
-    public $tag = '';
+     * Tag identifier used by file includes and selector attributes.
+     * @var string
+     */
+    public $tag;
 
     /**
-    * User friendly name used to identify the plugin.
-    * @var string
-    */
-    public $name = '';
+     * User friendly name used to identify the plugin.
+     * @var string
+     */
+    public $name;
 
     /**
-    * Current version of the plugin.
-    * @var string
-    */
-    public $version = '';
+     * Current version of the plugin.
+     * @var string
+     */
+    public $version;
 
+
+    /**
+     * Hellobar loader instance.
+     *
+     * @since 1.0.0
+     *
+     * @return object
+     */
     public static function instance() {
       if ( ! isset( self::$instance ) ) {
 			   self::$instance = new static;
@@ -69,6 +77,12 @@ if ( ! class_exists( 'HelloBar' ) ) {
       return self::$instance;
     }
 
+    /**
+     * Initiate the plugin by setting the default values and assigning any
+     * required actions and filters.
+     *
+     * @access private
+     */
     private function setup_actions() {
 
       if ( is_admin() ):
@@ -84,9 +98,9 @@ if ( ! class_exists( 'HelloBar' ) ) {
       $this->version = '1.0.0';
     }
 
-    /**
-     * Plugin menu page
-     */
+     /**
+      * Plugin menu page
+      */
      function _hello_menu_page() {
        add_menu_page( __( 'Hellobar Settings', $this->tag ), __( 'Hellobar Settings', $this->tag ), 'manage_options', 'hellobar-plugin-options', array( $this, '_hello_render_plugin_options' ), 'dashicons-megaphone' );
      }
