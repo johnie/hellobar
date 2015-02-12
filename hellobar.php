@@ -54,6 +54,12 @@ if ( ! class_exists( 'HelloBar' ) ) {
     public $name;
 
     /**
+     * Description of the plugin.
+     * @var string
+     */
+    public $description;
+
+    /**
      * Current version of the plugin.
      * @var string
      */
@@ -95,6 +101,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
     private function setup_globals() {
       $this->tag = 'hellobar';
       $this->name = 'Hellobar';
+      $this->description = 'Simple WordPress plugin to display hellobars a.k.a "Notifcations"';
       $this->version = '1.0.0';
     }
 
@@ -110,6 +117,13 @@ if ( ! class_exists( 'HelloBar' ) ) {
       */
      function _hello_render_plugin_options() {
        include_once dirname( __FILE__ ) . '/views/plugin-options.php';
+     }
+
+     /**
+      * Get markup for hellobar
+      */
+     public function hellobar_render() {
+       include_once dirname( __FILE__ ) . '/public/inc/hellobar.php';
      }
 
   }
