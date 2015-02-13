@@ -126,15 +126,15 @@ if ( ! class_exists( 'HelloBar' ) ) {
        include_once dirname( __FILE__ ) . '/public/inc/hellobar.php';
      }
 
-     /**
-      * Function for hellobar
-      */
-     function hellobar_render() {
-       hellobar()->render();
-     }
-
   }
 
+}
+
+/**
+ * Function for hellobar
+ */
+function hellobar_render() {
+  hellobar()->render();
 }
 
 if ( !function_exists('hellobar')) {
