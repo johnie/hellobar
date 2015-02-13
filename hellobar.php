@@ -130,7 +130,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
       * Function for hellobar
       */
      function hellobar_render() {
-       hellobar()->hellobar_render();
+       hellobar()->render();
      }
 
   }
