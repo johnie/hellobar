@@ -120,10 +120,17 @@ if ( ! class_exists( 'HelloBar' ) ) {
      }
 
      /**
-      * Get markup for hellobar
+      * Markup for hellobar
       */
-     public function hellobar_render() {
+     public function render() {
        include_once dirname( __FILE__ ) . '/public/inc/hellobar.php';
+     }
+
+     /**
+      * Function for hellobar
+      */
+     function hellobar_render() {
+       hellobar()->hellobar_render();
      }
 
   }
