@@ -105,26 +105,26 @@ if ( ! class_exists( 'HelloBar' ) ) {
       $this->version = '1.0.0';
     }
 
-     /**
-      * Plugin menu page
-      */
-     function _hello_menu_page() {
-       add_menu_page( __( $this->name . ' Settings', $this->tag ), __( $this->name . ' Settings', $this->tag ), 'manage_options', 'hellobar-plugin-options', array( $this, '_hello_render_plugin_options' ), 'dashicons-megaphone' );
-     }
+    /**
+     * Plugin menu page
+     */
+    function _hello_menu_page() {
+      add_menu_page( __( $this->name . ' Settings', $this->tag ), __( $this->name . ' Settings', $this->tag ), 'manage_options', 'hellobar-plugin-options', array( $this, '_hello_render_plugin_options' ), 'dashicons-megaphone' );
+    }
 
-     /**
-      * Render the plugin options view.
-      */
-     function _hello_render_plugin_options() {
-       include_once dirname( __FILE__ ) . '/views/plugin-options.php';
-     }
+    /**
+     * Render the plugin options view.
+     */
+    function _hello_render_plugin_options() {
+      include_once dirname( __FILE__ ) . '/views/plugin-options.php';
+    }
 
-     /**
-      * Markup for hellobar
-      */
-     public function render() {
-       include_once dirname( __FILE__ ) . '/public/inc/hellobar.php';
-     }
+    /**
+     * Markup for hellobar
+     */
+    public function render() {
+      include_once dirname( __FILE__ ) . '/public/inc/hellobar.php';
+   }
 
   }
 
@@ -135,6 +135,90 @@ if ( ! class_exists( 'HelloBar' ) ) {
  */
 function hellobar_render() {
   hellobar()->render();
+}
+
+/**
+* Check if request method is the same as the given method.
+*
+* @param string $method
+* @since 1.0.0
+*
+* @return bool True if method match false otherwise.
+*/
+function hellobar_is_method( $method ) {
+  return $_SERVER ['REQUEST_METHOD'] == strtoupper( $method );
+}
+
+/**
+* Remove trailing dobule quote.
+* PHP's $_POST object adds this automatic.
+*
+* @param string $str The string to check.
+* @since 1.0.0
+*
+* @return string
+*/
+function hellobar_remove_trailing_quotes( $str ) {
+  return str_replace( "\'", "'", str_replace( '\"', '"', $str ) );
+}
+
+/**
+* Get plugin options prefix.
+*
+* @return string
+*/
+function _hellobar_get_plugin_options_prefix() {
+  return 'hellobar_plugin_option_';
+}
+
+/**
+* Save plugin options data.
+*/
+function _hellobar_save_plugin_options() {
+  $pattern = '/^' . str_replace( '_', '\_', _hellobar_get_plugin_options_prefix() ) . '.*/';
+  $data    = array();
+  $keys    = preg_grep( $pattern, array_keys( $_POST ) );
+
+  foreach ( $keys as $key ) {
+    if ( ! isset( $_POST[ $key ] ) ) {
+      continue;
+    }
+
+    // Fix for input fields that should be true or false.
+    if ( $_POST[ $key ] === 'on' ) {
+      $data[ $key ] = true;
+    } else {
+      $data[ $key ] = hellobar_remove_trailing_quotes( $_POST[ $key ] );
+    }
+  }
+
+  foreach ( $data as $key => $value ) {
+    add_option( $key, $value );
+  }
+}
+
+/**
+* Get plugin option value.
+*
+* @param string $key
+* @param mixed $default
+*
+* @return mixed
+*/
+function hellobar_get_plugin_option( $key, $default ='' ) {
+  $prefix = _hellobar_get_plugin_options_prefix();
+  return get_option( $prefix . $key, $default );
+}
+
+/**
+* Update plugin option.
+*
+* @param string $key
+* @param mixed $value
+*/
+function hellobar_update_plugin_option( $key, $value ) {
+  $prefix = _hellobar_get_plugin_options_prefix();
+  update_option( $prefix . $key, $value );
 }
 
 if ( !function_exists('hellobar')) {
