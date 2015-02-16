@@ -123,7 +123,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
      * Save plugin options data.
      */
     function _hellobar_save_plugin_options() {
-      $pattern = '/^' . str_replace( '_', '\_', _hellobar_get_theme_options_prefix() ) . '.*/';
+      $pattern = '/^' . str_replace( '_', '\_', _hellobar_get_plugin_options_prefix() ) . '.*/';
       $data    = array();
       $keys    = preg_grep( $pattern, array_keys( $_POST ) );
 
@@ -153,8 +153,8 @@ if ( ! class_exists( 'HelloBar' ) ) {
      *
      * @return mixed
      */
-    function hellobar_get_theme_option( $key, $default ='' ) {
-      $prefix = _hellobar_get_theme_options_prefix();
+    function hellobar_get_plugin_option( $key, $default ='' ) {
+      $prefix = _hellobar_get_plugin_options_prefix();
       return get_option( $prefix . $key, $default );
     }
 
@@ -164,8 +164,8 @@ if ( ! class_exists( 'HelloBar' ) ) {
      * @param string $key
      * @param mixed $value
      */
-    function hellobar_update_theme_option( $key, $value ) {
-      $prefix = _hellobar_get_theme_options_prefix();
+    function hellobar_update_plugin_option( $key, $value ) {
+      $prefix = _hellobar_get_plugin_options_prefix();
       update_option( $prefix . $key, $value );
     }
 
