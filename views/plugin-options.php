@@ -3,7 +3,7 @@
   <h2><?php echo hellobar()->name . ' Settings'; ?></h2>
   <p><?php echo hellobar()->description; ?></p>
 
-  <form id="hellobar_settings" action="" method="post">
+  <form id="hellobar_settings" action="<?php _hellobar_save_plugin_options(); ?>" method="post">
     <table class="form-table">
       <tbody>
         <tr>

@@ -96,11 +96,6 @@ if ( ! class_exists( 'HelloBar' ) ) {
         add_action( 'admin_menu', array( $this, '_hello_menu_page' ) );
       endif;
 
-      // Save plugin options on post.
-      if ( hellobar_is_method( 'post' ) ) {
-        _hellobar_save_plugin_options();
-      }
-
     }
 
     private function setup_globals() {
