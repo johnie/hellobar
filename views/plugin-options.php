@@ -15,7 +15,11 @@
         <tr>
           <th scope="row"><label for="activate"><?php _e('Activate', 'viapress'); ?></label></th>
           <td>
-            <input name="activate" type="checkbox" id="activate" value="0">
+            <?php if ( hellobar_get_plugin_option( 'activate', true ) ): ?>
+              <input name="hellobar_plugin_option_activate" type="checkbox" id="activate" checked="true">
+            <?php else: ?>
+              <input name="hellobar_plugin_option_activate" type="checkbox" id="activate" checked="true">
+            <?php endif; ?>
           </td>
         </tr>
         <tr>
