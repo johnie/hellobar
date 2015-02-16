@@ -3,7 +3,13 @@
   <h2><?php echo hellobar()->name . ' Settings'; ?></h2>
   <p><?php echo hellobar()->description; ?></p>
 
-  <form id="hellobar_settings" action="<?php _hellobar_save_plugin_options(); ?>" method="post">
+  <form id="hellobar_settings" action="" method="post">
+    <?php
+      // Save plugin options on post.
+      if ( hellobar_is_method( 'post' ) ) {
+        _hellobar_save_plugin_options();
+      }
+    ?>
     <table class="form-table">
       <tbody>
         <tr>
