@@ -187,13 +187,15 @@ function _hellobar_save_plugin_options() {
     // Fix for input fields that should be true or false.
     if ( $_POST[ $key ] === 'on' ) {
       $data[ $key ] = true;
+    } else if ( $_POST[ $key ] === 'false' ) {
+      $data[ $key ] = false;
     } else {
       $data[ $key ] = hellobar_remove_trailing_quotes( $_POST[ $key ] );
     }
   }
 
   foreach ( $data as $key => $value ) {
-    add_option( $key, $value );
+    update_option( $key, $value );
   }
 }
 
@@ -207,7 +209,13 @@ function _hellobar_save_plugin_options() {
 */
 function hellobar_get_plugin_option( $key, $default ='' ) {
   $prefix = _hellobar_get_plugin_options_prefix();
-  return get_option( $prefix . $key, $default );
+  $value = get_option( $prefix . $key );
+
+  if ( $value === false || !empty( $value ) ) {
+    return $value;
+  }
+
+  return $default;
 }
 
 /**
@@ -221,10 +229,10 @@ function hellobar_update_plugin_option( $key, $value ) {
   update_option( $prefix . $key, $value );
 }
 
-if ( !function_exists('hellobar')) {
+if ( !function_exists( 'hellobar' ) ) {
   function hellobar() {
     return HelloBar::instance();
   }
 }
 
-add_action('plugins_loaded', 'hellobar');
+add_action( 'plugins_loaded', 'hellobar' );
