@@ -13,29 +13,28 @@
           </td>
         </tr>
         <tr>
-          <th scope="row"><label for="title"><?php _e('Title', 'viapress'); ?></label></th>
+          <th scope="row"><label for="hellobar_get_plugin_option_title"><?php _e('Title', 'viapress'); ?></label></th>
           <td>
-            <input name="title" type="text" id="title" placeholder="Title">
+            <input name="hellobar_get_plugin_option_title" value="<?php echo hellobar_get_plugin_option( 'title', '' ); ?>" type="text" id="title" placeholder="Title">
             <p class="description"><?php _e('Short explanation about the notice', 'viapress'); ?></p>
           </td>
         </tr>
         <tr>
-          <th scope="row"><label for="description"><?php _e('Description', 'viapress'); ?></label></th>
+          <th scope="row"><label for="hellobar_get_plugin_option_description"><?php _e('Description', 'viapress'); ?></label></th>
           <td>
-            <input name="description" type="text" id="description" placeholder="Description">
+            <input name="hellobar_get_plugin_option_description" value="<?php echo hellobar_get_plugin_option( 'description', '' ); ?>" type="text" id="description" placeholder="Description">
             <p class="description"><?php _e('Short description about the notice', 'viapress'); ?></p>
           </td>
         </tr>
         <tr>
-          <th scope="row"><label for="link"><?php _e('Link', 'viapress'); ?></label></th>
+          <th scope="row"><label for="hellobar_get_plugin_option_link"><?php _e('Link', 'viapress'); ?></label></th>
           <td>
-            <input name="link" type="text" id="link" placeholder="Link">
+            <input name="hellobar_get_plugin_option_link" value="<?php echo hellobar_get_plugin_option( 'link', '' ); ?>" type="text" id="link" placeholder="Link">
             <p class="description"><?php _e('If there\'s a post or link about the notice', 'viapress'); ?></p>
           </td>
         </tr>
       </tbody>
     </table>
-  </form>
-
   <?php submit_button(); ?>
+  </form>
 </div>
