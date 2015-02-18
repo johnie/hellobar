@@ -96,6 +96,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
         add_action( 'admin_menu', array( $this, '_hello_menu_page' ) );
         add_action( 'admin_init', array( $this, '_hellobar_meta_data' ) );
         add_action( 'save_post', array( $this, 'save_hellobar_data' ), 10, 2 );
+        add_filter('user_can_richedit', array( $this, '_hellobar_disable_visual_editor') );
 
       endif;
 
@@ -156,6 +157,9 @@ if ( ! class_exists( 'HelloBar' ) ) {
       ) );
     }
 
+    /**
+     * Register meta box
+     */
     function _hellobar_meta_data() {
       add_meta_box( 'hellobar_type',
         'Hellobar Type',
@@ -164,6 +168,9 @@ if ( ! class_exists( 'HelloBar' ) ) {
       );
     }
 
+    /**
+     * Markup for meta box
+     */
     function display_hellobar_type( $post ) {
       $values = get_post_custom( $post->ID );
       $selected = isset( $values['hellobar_type_select'] ) ? esc_attr( $values['hellobar_type_select'][0] ) : "";
@@ -183,6 +190,9 @@ if ( ! class_exists( 'HelloBar' ) ) {
       <?php
     }
 
+    /**
+     * Save meta box data
+     */
     function save_hellobar_data( $post_id ) {
       // Bail if we're doing an auto save
       if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
@@ -197,6 +207,16 @@ if ( ! class_exists( 'HelloBar' ) ) {
 
       // This is purely my personal preference for saving check-boxes
       update_post_meta( $post_id, array( $this, 'hellobar_type_select' ), $_POST['hellobar_type_select'] );
+    }
+
+    /**
+     * Remove the ability to use the visual editor
+     */
+    function _hellobar_disable_visual_editor( $default ) {
+      global $post;
+      if ( $this->tag == get_post_type($post) )
+        return false;
+      return $default;
     }
 
   }
