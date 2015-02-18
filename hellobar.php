@@ -94,8 +94,8 @@ if ( ! class_exists( 'HelloBar' ) ) {
       if ( is_admin() ):
         // Add options page
         add_action( 'admin_menu', array( $this, '_hello_menu_page' ) );
-      endif;
 
+      endif;
     }
 
     private function setup_globals() {
@@ -110,6 +110,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
      */
     function _hello_menu_page() {
       add_menu_page( __( $this->name . ' Settings', $this->tag ), __( $this->name . ' Settings', $this->tag ), 'manage_options', 'hellobar-plugin-options', array( $this, '_hello_render_plugin_options' ), 'dashicons-megaphone' );
+      add_menu_page( __( $this->name . 's', $this->tag), __( $this->name, $this->tag ), 'edit_posts', 'hellobars', array( $this, '_hellobar_post_type' ) );
     }
 
     /**
@@ -124,7 +125,20 @@ if ( ! class_exists( 'HelloBar' ) ) {
      */
     public function render() {
       include_once dirname( __FILE__ ) . '/public/inc/hellobar.php';
-   }
+    }
+
+    function _hellobar_post_type() {
+      register_post_type( 'hellobar', array(
+        'labels' => array(
+          'name' => 'Hellobars',
+          'singular_name' => 'Hellobar',
+        ),
+        'public' => true,
+        'show_ui' => true,
+        'show_in_menu' => 'hellobar-plugin-options',
+        'supports' => array( 'title' ,'thumbnail', 'editor' ),
+      ) );
+    }
 
   }
 
