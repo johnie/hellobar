@@ -94,6 +94,8 @@ if ( ! class_exists( 'HelloBar' ) ) {
       if ( is_admin() ):
         // Add options page
         add_action( 'admin_menu', array( $this, '_hello_menu_page' ) );
+        add_action( 'admin_init', array( $this, '_hellobar_meta_data' ) );
+        add_action( 'save_post', array( $this, 'save_hellobar_data' ), 10, 2 );
 
       endif;
 
@@ -130,6 +132,9 @@ if ( ! class_exists( 'HelloBar' ) ) {
       include_once dirname( __FILE__ ) . '/public/inc/hellobar.php';
     }
 
+    /**
+     * Registering hellobar post type
+     */
     function _hellobar_post_type() {
       register_post_type( 'hellobar', array(
         'labels' => array(
@@ -149,6 +154,48 @@ if ( ! class_exists( 'HelloBar' ) ) {
         'show_in_menu'        => 'hellobar-plugin-options',
         'supports'            => array( 'title' , 'thumbnail', 'editor' ),
       ) );
+    }
+
+    function _hellobar_meta_data() {
+      add_meta_box( 'hellobar_type',
+        'Hellobar Type',
+        array( $this, 'display_hellobar_type' ),
+        'hellobar', 'normal', 'high'
+      );
+    }
+
+    function display_hellobar_type( $post ) {
+      $values = get_post_custom( $post->ID );
+      $selected = isset( $values['hellobar_type_select'] ) ? esc_attr( $values['hellobar_type_select'][0] ) : "";
+
+      wp_nonce_field( 'my_meta_box_nonce', 'meta_box_nonce' );
+
+      ?>
+        <p>What kind of hellobar is it?</p>
+        <p>
+        <label for="hellobar_type_select">Type</label>
+          <select name="hellobar_type_select" id="hellobar_type_select">
+              <option value="alert" <?php selected( $selected, 'alert' ); ?>>Alert</option>
+              <option value="notice" <?php selected( $selected, 'notice' ); ?>>Notice</option>
+              <option value="campaign" <?php selected( $selected, 'campaign' ); ?>>Campaign</option>
+          </select>
+        </p>
+      <?php
+    }
+
+    function save_hellobar_data( $post_id ) {
+      // Bail if we're doing an auto save
+      if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+      // if our nonce isn't there, or we can't verify it, bail
+      if( !isset( $_POST['meta_box_nonce'] ) || !wp_verify_nonce( $_POST['meta_box_nonce'], 'my_meta_box_nonce' ) ) return;
+      // if our current user can't edit this post, bail
+      if( !current_user_can( 'edit_post' ) ) return;
+
+      if( isset( $_POST['hellobar_type_select'] ) )
+        update_post_meta( $post_id, 'hellobar_type_select', esc_attr( $_POST['hellobar_type_select'] ) );
+
+      // This is purely my personal preference for saving check-boxes
+      update_post_meta( $post_id, 'hellobar_type_select', $_POST['hellobar_type_select'] );
     }
 
   }
