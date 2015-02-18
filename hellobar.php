@@ -135,7 +135,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
         ),
         'public' => true,
         'show_ui' => true,
-        'show_in_menu' => 'hellobar-plugin-options',
+        'show_in_menu' => 'hellobars',
         'supports' => array( 'title' ,'thumbnail', 'editor' ),
       ) );
     }
