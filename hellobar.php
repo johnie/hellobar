@@ -187,7 +187,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
       // Bail if we're doing an auto save
       if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
       // if our nonce isn't there, or we can't verify it, bail
-      if( !isset( $_POST['meta_box_nonce'] ) || !wp_verify_nonce( $_POST['meta_box_nonce'], array( $this, 'my_meta_box_nonce') ) ) return;
+      if( !isset( $_POST['meta_box_nonce'] ) || !wp_verify_nonce( $_POST['meta_box_nonce'], 'my_meta_box_nonce' ) ) return;
       // if our current user can't edit this post, bail
       if( !current_user_can( 'edit_post' ) ) return;
 
