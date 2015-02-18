@@ -191,8 +191,9 @@ if ( ! class_exists( 'HelloBar' ) ) {
       // if our current user can't edit this post, bail
       if( !current_user_can( 'edit_post' ) ) return;
 
-      if( isset( $_POST['hellobar_type_select'] ) )
+      if( isset( $_POST['hellobar_type_select'] ) ) {
         update_post_meta( $post_id, array( $this, 'hellobar_type_select' ), esc_attr( $_POST['hellobar_type_select'] ) );
+      }
 
       // This is purely my personal preference for saving check-boxes
       update_post_meta( $post_id, array( $this, 'hellobar_type_select' ), $_POST['hellobar_type_select'] );
