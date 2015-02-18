@@ -132,20 +132,22 @@ if ( ! class_exists( 'HelloBar' ) ) {
 
     function _hellobar_post_type() {
       register_post_type( 'hellobar', array(
-        'labels'          => array(
-          'name'          => __( 'Hellobars', 'hellobar' ),
-          'singular_name' => __( 'Hellobar', 'hellobar' ),
-          'menu_name'     => __( 'All Hellobars', 'hellobar' ),
-          'new_item'       => __( 'Add Hellobar', 'hellobar' ),
-          'add_new'       => __( 'Add Hellobar', 'hellobar' ),
-          'add_new_item'  => __( 'Add Hellobar', 'hellobar' ),
+        'labels' => array(
+          'name'                => __( 'Hellobars', 'hellobar' ),
+          'singular_name'       => __( 'Hellobar', 'hellobar' ),
+          'menu_name'           => __( 'All Hellobars', 'hellobar' ),
+          'new_item'            => __( 'Add Hellobar', 'hellobar' ),
+          'add_new'             => __( 'Add Hellobar', 'hellobar' ),
+          'add_new_item'        => __( 'Add Hellobar', 'hellobar' ),
+          'not_found'           => __( 'No hellobars found', 'hellobar' ),
+          'not_found_in_trash'  => __( 'No hellobars found in trash', 'hellobar' )
         ),
-        'public' => true,
-        'show_ui' => true,
+        'public'              => true,
+        'show_ui'             => true,
         'show_in_nav_menus'   => true,
         'exclude_from_search' => true,
-        'show_in_menu' => 'hellobar-plugin-options',
-        'supports' => array( 'title' ,'thumbnail', 'editor' ),
+        'show_in_menu'        => 'hellobar-plugin-options',
+        'supports'            => array( 'title' , 'thumbnail', 'editor' ),
       ) );
     }
 
