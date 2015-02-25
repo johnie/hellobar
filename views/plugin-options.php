@@ -15,8 +15,8 @@
         <tr>
           <th scope="row"><label for="hellobar_plugin_option_activation"><?php _e('Activate', 'viapress'); ?></label></th>
           <td>
-             <input type="hidden" name="hellobar_plugin_option_activation" value="false" />
-             <input type="checkbox" name="hellobar_plugin_option_activation" <?php echo hellobar_get_plugin_option( 'activation', true ) ? 'checked="checked"' : ''; ?> />
+            <input type="hidden" name="hellobar_plugin_option_activation" value="off" />
+           <input type="checkbox" name="hellobar_plugin_option_activation" <?php echo hellobar_get_plugin_option( 'activation', "on" ) === "on" ? 'checked' : ''; ?> />
           </td>
         </tr>
         <tr>

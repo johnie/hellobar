@@ -179,6 +179,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
 
       ?>
         <p>What kind of hellobar is it?</p>
+        <p><?php echo $selected ?></p>
         <p>
         <label for="hellobar_type_select">Type</label>
           <select name="hellobar_type_select" id="hellobar_type_select">
@@ -277,14 +278,8 @@ function _hellobar_save_plugin_options() {
       continue;
     }
 
-    // Fix for input fields that should be true or false.
-    if ( $_POST[ $key ] === 'on' ) {
-      $data[ $key ] = true;
-    } else if ( $_POST[ $key ] === 'false' ) {
-      $data[ $key ] = false;
-    } else {
-      $data[ $key ] = hellobar_remove_trailing_quotes( $_POST[ $key ] );
-    }
+    $data[ $key ] = hellobar_remove_trailing_quotes( $_POST[ $key ] );
+
   }
 
   foreach ( $data as $key => $value ) {
