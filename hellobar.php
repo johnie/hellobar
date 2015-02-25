@@ -178,7 +178,6 @@ if ( ! class_exists( 'HelloBar' ) ) {
 
       ?>
         <p>What kind of hellobar is it?</p>
-        <p><?php echo $selected ?></p>
         <p>
         <label for="hellobar_type_select">Type</label>
           <select name="hellobar_type_select" id="hellobar_type_select">
@@ -198,8 +197,6 @@ if ( ! class_exists( 'HelloBar' ) ) {
       if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
       // if our nonce isn't there, or we can't verify it, bail
       if( !isset( $_POST['meta_box_nonce'] ) || !wp_verify_nonce( $_POST['meta_box_nonce'], 'my_meta_box_nonce' ) ) return;
-      // if our current user can't edit this post, bail
-      if( !current_user_can( 'edit_post' ) ) return;
 
       if( isset( $_POST['hellobar_type_select'] ) ) {
         update_post_meta( $post_id, '_hellobar_type_select', esc_attr( $_POST['hellobar_type_select'] ) );
