@@ -173,7 +173,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
      */
     function display_hellobar_type( $post ) {
       $values = get_post_custom( $post->ID );
-      $selected = isset( $values['hellobar_type_select'] ) ? esc_attr( $values['hellobar_type_select'][0] ) : "";
+      $selected = get_post_meta($post->ID, '_hellobar_type_select', true);
 
       wp_nonce_field( 'my_meta_box_nonce', 'meta_box_nonce' );
 
@@ -202,9 +202,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
       // if our current user can't edit this post, bail
       if( !current_user_can( 'edit_post' ) ) return;
 
-      if( isset( $_POST['hellobar_type_select'] ) ) {
-        update_post_meta( $post_id, '_hellobar_type_select', esc_attr( $_POST['hellobar_type_select'] ) );
-      }
+      update_post_meta( $post_id, '_hellobar_type_select', esc_attr( $_POST['hellobar_type_select'] ) );
 
     }
 
