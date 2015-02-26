@@ -153,7 +153,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
         'show_in_nav_menus'   => true,
         'exclude_from_search' => true,
         'show_in_menu'        => 'hellobar-plugin-options',
-        'supports'            => array( 'title' , 'thumbnail', 'editor' ),
+        'supports'            => array( 'title' , 'excerpt', 'editor' ),
       ) );
     }
 
