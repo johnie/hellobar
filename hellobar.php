@@ -148,6 +148,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
           'not_found'           => __( 'No hellobars found', 'hellobar' ),
           'not_found_in_trash'  => __( 'No hellobars found in trash', 'hellobar' )
         ),
+        'taxonomies' => array('category'),
         'public'              => true,
         'show_ui'             => true,
         'show_in_nav_menus'   => true,
@@ -166,18 +167,20 @@ if ( ! class_exists( 'HelloBar' ) ) {
         array( $this, 'display_hellobar_type' ),
         'hellobar', 'normal', 'high'
       );
+
     }
 
     /**
      * Markup for meta box
      */
     function display_hellobar_type( $post ) {
-      $values = get_post_custom( $post->ID );
-			$selected = get_post_meta($post->ID, '_hellobar_type_select', true);
+      $values   = get_post_custom( $post->ID );
+			$selected = get_post_meta( $post->ID, '_hellobar_type_select', true );
+      $link     = get_post_meta( $post->ID, '_hellobar_type_link', true );
       wp_nonce_field( 'my_meta_box_nonce', 'meta_box_nonce' );
 
       ?>
-        <p>What kind of hellobar is it?</p>
+        <p><strong>What kind of hellobar is it?</strong></p>
         <p>
         <label for="hellobar_type_select">Type</label>
           <select name="hellobar_type_select" id="hellobar_type_select">
@@ -185,6 +188,11 @@ if ( ! class_exists( 'HelloBar' ) ) {
               <option value="notice" <?php selected( $selected, 'notice' ); ?>>Notice</option>
               <option value="campaign" <?php selected( $selected, 'campaign' ); ?>>Campaign</option>
           </select>
+        </p>
+        <p><strong>Link to another place</strong></p>
+        <p>
+          <label for="hellobar_type_link">Link</label>
+          <input type="text" name="hellobar_type_link" value="<?php echo $link ?>" placeholder="Link to another place">
         </p>
       <?php
     }
@@ -200,6 +208,10 @@ if ( ! class_exists( 'HelloBar' ) ) {
 
       if( isset( $_POST['hellobar_type_select'] ) ) {
         update_post_meta( $post_id, '_hellobar_type_select', esc_attr( $_POST['hellobar_type_select'] ) );
+      }
+
+      if( isset( $_POST['hellobar_type_link'] ) ) {
+        update_post_meta( $post_id, '_hellobar_type_link', esc_attr( $_POST['hellobar_type_link'] ) );
       }
 
     }
