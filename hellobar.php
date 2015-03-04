@@ -148,13 +148,16 @@ if ( ! class_exists( 'HelloBar' ) ) {
           'not_found'           => __( 'No hellobars found', 'hellobar' ),
           'not_found_in_trash'  => __( 'No hellobars found in trash', 'hellobar' )
         ),
-        'taxonomies' => array('category'),
+        'taxonomies'          => array('category'),
         'public'              => true,
         'show_ui'             => true,
         'show_in_nav_menus'   => true,
+        'publicly_queryable'  => true,
         'exclude_from_search' => true,
+        'rewrite'             => array('slug' => 'hb'),
         'show_in_menu'        => 'hellobar-plugin-options',
         'supports'            => array( 'title' , 'excerpt', 'editor' ),
+        'capability_type'     => 'post'
       ) );
     }
 
