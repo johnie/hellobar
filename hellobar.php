@@ -178,7 +178,8 @@ if ( ! class_exists( 'HelloBar' ) ) {
      */
     function display_hellobar_type( $post ) {
       $values   = get_post_custom( $post->ID );
-			$selected = get_post_meta( $post->ID, '_hellobar_type_select', true );
+      $selected = get_post_meta( $post->ID, '_hellobar_type_select', true );
+			$selected = get_post_meta( $post->ID, '_hellobar_status', true );
       $link     = get_post_meta( $post->ID, '_hellobar_type_link', true );
       wp_nonce_field( 'my_meta_box_nonce', 'meta_box_nonce' );
 
@@ -196,6 +197,15 @@ if ( ! class_exists( 'HelloBar' ) ) {
         <p>
           <label for="hellobar_type_link">Link</label>
           <input type="text" name="hellobar_type_link" value="<?php echo $link ?>" placeholder="Link to another place">
+        </p>
+        <p><strong>What's the status for it?</strong></p>
+        <p>
+        <label for="hellobar_status">Type</label>
+          <select name="hellobar_status" id="hellobar_status">
+              <option value="unresolved" <?php selected( $selected, 'unresolved' ); ?>>Unresolved</option>
+              <option value="pending" <?php selected( $selected, 'pending' ); ?>>Pending</option>
+              <option value="resolved" <?php selected( $selected, 'resolved' ); ?>>Resolved</option>
+          </select>
         </p>
       <?php
     }
@@ -215,6 +225,10 @@ if ( ! class_exists( 'HelloBar' ) ) {
 
       if( isset( $_POST['hellobar_type_link'] ) ) {
         update_post_meta( $post_id, '_hellobar_type_link', esc_attr( $_POST['hellobar_type_link'] ) );
+      }
+
+      if( isset( $_POST['hellobar_status'] ) ) {
+        update_post_meta( $post_id, '_hellobar_status', esc_attr( $_POST['hellobar_status'] ) );
       }
 
     }
