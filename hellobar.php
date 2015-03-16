@@ -179,7 +179,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
     function display_hellobar_type( $post ) {
       $values   = get_post_custom( $post->ID );
       $selected = get_post_meta( $post->ID, '_hellobar_type_select', true );
-			$selected = get_post_meta( $post->ID, '_hellobar_status', true );
+			$statuses = get_post_meta( $post->ID, '_hellobar_status', true );
       $link     = get_post_meta( $post->ID, '_hellobar_type_link', true );
       wp_nonce_field( 'my_meta_box_nonce', 'meta_box_nonce' );
 
@@ -202,9 +202,9 @@ if ( ! class_exists( 'HelloBar' ) ) {
         <p>
         <label for="hellobar_status">Type</label>
           <select name="hellobar_status" id="hellobar_status">
-              <option value="unresolved" <?php selected( $selected, 'unresolved' ); ?>>Unresolved</option>
-              <option value="pending" <?php selected( $selected, 'pending' ); ?>>Pending</option>
-              <option value="resolved" <?php selected( $selected, 'resolved' ); ?>>Resolved</option>
+              <option value="unresolved" <?php selected( $statuses, 'unresolved' ); ?>>Unresolved</option>
+              <option value="pending" <?php selected( $statuses, 'pending' ); ?>>Pending</option>
+              <option value="resolved" <?php selected( $statuses, 'resolved' ); ?>>Resolved</option>
           </select>
         </p>
       <?php
