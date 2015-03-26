@@ -154,7 +154,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
         'show_in_nav_menus'   => true,
         'publicly_queryable'  => true,
         'exclude_from_search' => true,
-        'rewrite'             => array('slug' => 'hb'),
+        'rewrite'             => array('slug' => 'status'),
         'show_in_menu'        => 'hellobar-plugin-options',
         'supports'            => array( 'title' , 'excerpt', 'editor' ),
         'capability_type'     => 'post'
@@ -200,9 +200,9 @@ if ( ! class_exists( 'HelloBar' ) ) {
         </p>
         <p><strong>What's the status for it?</strong></p>
         <p>
-        <label for="hellobar_status">Type</label>
+        <label for="hellobar_status">Status</label>
           <select name="hellobar_status" id="hellobar_status">
-              <option value="unresolved" <?php selected( $statuses, 'unresolved' ); ?>>Unresolved</option>
+              <option value="unsolved" <?php selected( $statuses, 'unsolved' ); ?>>Unsolved</option>
               <option value="pending" <?php selected( $statuses, 'pending' ); ?>>Pending</option>
               <option value="resolved" <?php selected( $statuses, 'resolved' ); ?>>Resolved</option>
           </select>
