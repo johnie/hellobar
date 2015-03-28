@@ -181,6 +181,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
       $selected = get_post_meta( $post->ID, '_hellobar_type_select', true );
 			$statuses = get_post_meta( $post->ID, '_hellobar_status', true );
       $link     = get_post_meta( $post->ID, '_hellobar_type_link', true );
+      $text     = get_post_meta( $post->ID, '_hellobar_button_text', true );
       wp_nonce_field( 'my_meta_box_nonce', 'meta_box_nonce' );
 
       ?>
@@ -197,6 +198,11 @@ if ( ! class_exists( 'HelloBar' ) ) {
         <p>
           <label for="hellobar_type_link">Link</label>
           <input type="text" name="hellobar_type_link" value="<?php echo $link ?>" placeholder="Link to another place">
+        </p>
+        <p><strong>Text for button (default: Read more)</strong></p>
+        <p>
+          <label for="hellobar_button_text">Text</label>
+          <input type="text" name="hellobar_button_text" value="<?php echo $text ?>" placeholder="Text for button">
         </p>
         <p><strong>What's the status for it?</strong></p>
         <p>
@@ -225,6 +231,10 @@ if ( ! class_exists( 'HelloBar' ) ) {
 
       if( isset( $_POST['hellobar_type_link'] ) ) {
         update_post_meta( $post_id, '_hellobar_type_link', esc_attr( $_POST['hellobar_type_link'] ) );
+      }
+
+      if( isset( $_POST['hellobar_button_text'] ) ) {
+        update_post_meta( $post_id, '_hellobar_button_text', esc_attr( $_POST['hellobar_button_text'] ) );
       }
 
       if( isset( $_POST['hellobar_status'] ) ) {
