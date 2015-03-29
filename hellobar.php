@@ -45,24 +45,28 @@ if ( ! class_exists( 'HelloBar' ) ) {
      * Tag identifier used by file includes and selector attributes.
      * @var string
      */
+
     public $tag;
 
     /**
      * User friendly name used to identify the plugin.
      * @var string
      */
+
     public $name;
 
     /**
      * Description of the plugin.
      * @var string
      */
+
     public $description;
 
     /**
      * Current version of the plugin.
      * @var string
      */
+
     public $version;
 
 
@@ -73,6 +77,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
      *
      * @return object
      */
+
     public static function instance() {
       if ( ! isset( self::$instance ) ) {
 			   self::$instance = new static;
@@ -89,6 +94,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
      *
      * @access private
      */
+
     private function setup_actions() {
 
       if ( is_admin() ):
@@ -100,7 +106,10 @@ if ( ! class_exists( 'HelloBar' ) ) {
 
       endif;
 
-      add_action( 'init', array( $this, '_hellobar_post_type'), 0 );
+      add_action( 'init', array( $this, '_hellobar_post_type' ), 0 );
+      add_action( 'rss_item', array( $this, '_hellobar_rss_fields' ) );
+      add_action( 'atom_entry', array( $this, '_hellobar_rss_fields' ) );
+      add_action( 'rss2_item', array( $this, '_hellobar_rss_fields' ) );
 
     }
 
@@ -114,6 +123,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
     /**
      * Plugin menu page
      */
+
     function _hello_menu_page() {
       add_menu_page( __( $this->name . 's', $this->tag ), __( $this->name . 's', $this->tag ), 'manage_options', 'hellobar-plugin-options', array( $this, '_hello_render_plugin_options' ), 'dashicons-megaphone' );
       add_submenu_page( 'hellobar-plugin-options', __( $this->name . ' Settings', $this->tag ), __( $this->name . ' Settings', $this->tag ), 'manage_options', 'hellobar-plugin-settings', array( $this, '_hello_render_plugin_options' ) );
@@ -122,6 +132,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
     /**
      * Render the plugin options view.
      */
+
     function _hello_render_plugin_options() {
       include_once dirname( __FILE__ ) . '/views/plugin-options.php';
     }
@@ -129,6 +140,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
     /**
      * Markup for hellobar
      */
+
     public function render() {
       include_once dirname( __FILE__ ) . '/public/inc/hellobar.php';
     }
@@ -136,6 +148,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
     /**
      * Registering hellobar post type
      */
+
     function _hellobar_post_type() {
       register_post_type( 'hellobar', array(
         'labels' => array(
@@ -164,6 +177,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
     /**
      * Register meta box
      */
+
     function _hellobar_meta_data() {
       add_meta_box( 'hellobar_type',
         'Hellobar Type',
@@ -176,6 +190,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
     /**
      * Markup for meta box
      */
+
     function display_hellobar_type( $post ) {
       $values   = get_post_custom( $post->ID );
       $selected = get_post_meta( $post->ID, '_hellobar_type_select', true );
@@ -219,6 +234,7 @@ if ( ! class_exists( 'HelloBar' ) ) {
     /**
      * Save meta box data
      */
+
     function save_hellobar_data( $post_id ) {
       // Bail if we're doing an auto save
       if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
@@ -246,11 +262,28 @@ if ( ! class_exists( 'HelloBar' ) ) {
     /**
      * Remove the ability to use the visual editor
      */
+
     function _hellobar_disable_visual_editor( $default ) {
       global $post;
       if ( $this->tag == get_post_type($post) )
         return false;
       return $default;
+    }
+
+    /**
+     * Add custom fields to RSS
+     */
+
+    function _hellobar_rss_fields() {
+      if ( get_post_type() == 'hellobar' && $status = get_post_meta( get_the_ID(), '_hellobar_status', true ) ) {
+        if ( is_feed() ) {
+          if( !empty($status) ) {
+            echo '<hellobar_status>';
+            echo ucfirst($status);
+            echo '</hellobar_status>';
+          }
+        }
+      }
     }
 
   }
