@@ -146,6 +146,14 @@ if ( ! class_exists( 'HelloBar' ) ) {
     }
 
     /**
+     * Markup for subscribe
+     */
+
+    public function subscribe() {
+      include_once dirname( __FILE__ ) . '/public/inc/subscribe.php';
+    }
+
+    /**
      * Registering hellobar post type
      */
 
@@ -278,9 +286,9 @@ if ( ! class_exists( 'HelloBar' ) ) {
       if ( get_post_type() == 'hellobar' && $status = get_post_meta( get_the_ID(), '_hellobar_status', true ) ) {
         if ( is_feed() ) {
           if( !empty($status) ) {
-            echo '<hellobar_status>';
+            echo '<status>';
             echo ucfirst($status);
-            echo '</hellobar_status>';
+            echo '</status>';
           }
         }
       }
@@ -293,8 +301,17 @@ if ( ! class_exists( 'HelloBar' ) ) {
 /**
  * Function for hellobar
  */
+
 function hellobar_render() {
   hellobar()->render();
+}
+
+/**
+ * Function for hellobar
+ */
+
+function hellobar_subscribe() {
+  hellobar()->subscribe();
 }
 
 /**
@@ -305,6 +322,7 @@ function hellobar_render() {
 *
 * @return bool True if method match false otherwise.
 */
+
 function hellobar_is_method( $method ) {
   return $_SERVER ['REQUEST_METHOD'] == strtoupper( $method );
 }
@@ -318,6 +336,7 @@ function hellobar_is_method( $method ) {
 *
 * @return string
 */
+
 function hellobar_remove_trailing_quotes( $str ) {
   return str_replace( "\'", "'", str_replace( '\"', '"', $str ) );
 }
@@ -327,6 +346,7 @@ function hellobar_remove_trailing_quotes( $str ) {
 *
 * @return string
 */
+
 function _hellobar_get_plugin_options_prefix() {
   return 'hellobar_plugin_option_';
 }
@@ -334,6 +354,7 @@ function _hellobar_get_plugin_options_prefix() {
 /**
 * Save plugin options data.
 */
+
 function _hellobar_save_plugin_options() {
   $pattern = '/^' . str_replace( '_', '\_', _hellobar_get_plugin_options_prefix() ) . '.*/';
   $data    = array();
@@ -361,6 +382,7 @@ function _hellobar_save_plugin_options() {
 *
 * @return mixed
 */
+
 function hellobar_get_plugin_option( $key, $default ='' ) {
   $prefix = _hellobar_get_plugin_options_prefix();
   $value = get_option( $prefix . $key );
@@ -378,6 +400,7 @@ function hellobar_get_plugin_option( $key, $default ='' ) {
 * @param string $key
 * @param mixed $value
 */
+
 function hellobar_update_plugin_option( $key, $value ) {
   $prefix = _hellobar_get_plugin_options_prefix();
   update_option( $prefix . $key, $value );
